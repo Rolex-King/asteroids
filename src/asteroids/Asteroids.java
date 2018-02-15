@@ -41,9 +41,10 @@ public class Asteroids extends Application {
     double misilVelocidadX;
     double misilVelocidadY;
     
-    double posMisilX = posNaveX; 
-    double posMisilY = posNaveY;
+    double posMisilX; 
+    double posMisilY;
     
+    Circle misil = new Circle();
     Pane root;
     
     @Override
@@ -88,32 +89,20 @@ public class Asteroids extends Application {
         });
         fuam.setFill(Color.YELLOW);
         root.getChildren().add(fuam);
-        
-        //Objeto misil
-        Circle misil = new Circle();
-        misil.setFill(Color.RED);
-        misil.setRadius(3);
-        root.getChildren().add(misil);
-        misil.setTranslateX(posMisilX);
-        misil.setTranslateY(posMisilY);
-        
         AnimationTimer animationnave = new AnimationTimer(){
             @Override
             public void handle(long now) {
                 
-                
+                //El misil aumenta la velocidad en X
+                posMisilX += misilVelocidadX;
                 //La nave se mueve en X constantemente
                 posNaveX += naveVelocidadX;
                 nave.setTranslateX(posNaveX);
-                //Posicion de la bola en X
-                posMisilX += misilVelocidadX;
-                misil.setTranslateX(posMisilX);
-                //La nave se mueve en Y constantemente                
-                posNaveY += naveVelocidadY;
+                //La nave se mueve en Y constantemente   
                 nave.setTranslateY(posNaveY);
+                posNaveY += naveVelocidadY;
                 //Posicion de la bola en Y
                 posMisilY += misilVelocidadY;
-                misil.setTranslateY(posMisilY);
                 //La nave gira constantemente
                 anguloNave += anguloVelNave;
                 nave.setRotate(anguloNave);
@@ -123,8 +112,7 @@ public class Asteroids extends Application {
                 naveVelocidadX = Math.cos(anguloNaveRadianes) * naveAceleracion;
                 naveVelocidadY = Math.sin(anguloNaveRadianes) * naveAceleracion;
                 
-                misilVelocidadX = Math.cos(anguloNaveRadianes) * misilAce;
-                misilVelocidadY = Math.sin(anguloNaveRadianes) * misilAce;
+                
                 //En case de que la nave toque cada borde, vuelve al otro lado de la pantalla
                 if(posNaveX > SCENE_TAM_X){
                     posNaveX = 0;
@@ -154,8 +142,25 @@ public class Asteroids extends Application {
         scene.setOnKeyPressed((KeyEvent event) -> {
             switch(event.getCode()) {
                 case SPACE:
+                    misil = new Circle();
+                    misil.setFill(Color.RED);
+                    misil.setRadius(3);
+                    root.getChildren().add(misil);
+                    misil.setTranslateX(posMisilX);
+                    misil.setTranslateY(posMisilY);
+                    //Posicion de la bola en X
+                    misil.setTranslateX(posNaveX);
+                    //Posicion de la bola en Y
+                    misil.setTranslateY(posNaveY);
+                    
+                    double anguloMisilRadianes = Math.toRadians(anguloNave);
+                    
+                    misilVelocidadX = Math.cos(anguloMisilRadianes) * misilAce;
+                    misilVelocidadY = Math.sin(anguloMisilRadianes) * misilAce;
                     //Si se pulsa espacio dispara
-                    misilAce = 20;
+                    misilAce = 3;
+//                    misil.setTranslateX();
+//                    misil.setTranslateY();
                     break;
                 case D:
                     //Si se pulsa derecha la nave gira 90 grados//
