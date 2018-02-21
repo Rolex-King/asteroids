@@ -80,7 +80,20 @@ public class Asteroids extends Application {
         });
         furo.setFill(Color.RED);
         root.getChildren().add(furo);
-        //Objeto fuego amarillo
+//        Asteroide
+        Polygon asteroide = new Polygon();
+        asteroide.getPoints().addAll(new Double []{
+            0.0, 0.0,
+            40.0, 20.0,
+            60.0, 60.0,
+            10.0, 60.0
+        });
+        asteroide.setTranslateX(300);
+        asteroide.setTranslateY(300);
+        asteroide.setFill(Color.RED);
+        root.getChildren().add(asteroide);
+
+//        Objeto fuego amarillo
         Polygon fuam = new Polygon();
         fuam.getPoints().addAll(new Double []{
             0.0, 0.0,
@@ -103,13 +116,13 @@ public class Asteroids extends Application {
                 posMisilX += misilVelocidadX;
                 //Posicion de la bola en Y
                 posMisilY += misilVelocidadY;
-                //La nave gira constantemente
+//                La nave gira constantemente
                 anguloNave += anguloVelNave;
                 nave.setRotate(anguloNave);
                 
                 System.out.println("naveVelocidadX :" + naveVelocidadX);
                 
-                //En case de que la nave toque cada borde, vuelve al otro lado de la pantalla
+//                En case de que la nave toque cada borde, vuelve al otro lado de la pantalla
                 if(posNaveX > SCENE_TAM_X){
                     posNaveX = 0;
                 }
@@ -123,18 +136,18 @@ public class Asteroids extends Application {
                     posNaveY = SCENE_TAM_Y;
                 }
                 
-                //Si el valor es mayor que 360 cambia a 0
+//                Si el valor es mayor que 360 cambia a 0
                 if (anguloNave>360){
                     anguloNave=0;
                 } 
-                //Si el valor es menor de 0 cambia a 360
+//                Si el valor es menor de 0 cambia a 360
                 else if (anguloNave<0){
                     anguloNave=360;
                 }
             };
         };
         animationnave.start();        
-        //Reaccion a los botones
+//        Reaccion a los botones
         scene.setOnKeyPressed((KeyEvent event) -> {
             switch(event.getCode()) {
                 case SPACE:
@@ -142,9 +155,9 @@ public class Asteroids extends Application {
                     misil.setFill(Color.RED);
                     misil.setRadius(3);
                     root.getChildren().add(misil);
-                    //Posicion de la bola en X
+//                    Posicion de la bola en X
                     misil.setTranslateX(posNaveX);
-                    //Posicion de la bola en Y
+//                    Posicion de la bola en Y
                     misil.setTranslateY(posNaveY);
                     
 //                    Si se pulsa espacio dispara
@@ -162,11 +175,11 @@ public class Asteroids extends Application {
                     anguloVelNave = +5;
                     break;
                 case LEFT:
-                    //Si se pulsa izquierda la nave gira a una velocidad -5 grados//                   
+//                    Si se pulsa izquierda la nave gira a una velocidad -5 grados//                   
                     anguloVelNave = -5;
                     break;
                 case UP:
-                    //Cuando pulsa arriba la nave acelera y modifica la velocidad dependiendo del ángulo
+//                    Cuando pulsa arriba la nave acelera y modifica la velocidad dependiendo del ángulo
                     naveAceleracion = 0.5;
                     //Si se pulsa arriba la nave avanza segun donde este mirando// 
                     double anguloNaveRadianes = Math.toRadians(anguloNave);
