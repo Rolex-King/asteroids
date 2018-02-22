@@ -106,21 +106,15 @@ public class Asteroids extends Application {
             @Override
             public void handle(long now) {
                 
-                //La nave se mueve en X constantemente
-                posNaveX += naveVelocidadX;
+                movimientoNave();
                 nave.setTranslateX(posNaveX);
-                //La nave se mueve en Y constantemente   
                 nave.setTranslateY(posNaveY);
-                posNaveY += naveVelocidadY;
-                //El misil aumenta la velocidad en X
-                posMisilX += misilVelocidadX;
-                //Posicion de la bola en Y
-                posMisilY += misilVelocidadY;
+
+                
+                
 //                La nave gira constantemente
                 anguloNave += anguloVelNave;
                 nave.setRotate(anguloNave);
-                
-                System.out.println("naveVelocidadX :" + naveVelocidadX);
                 
 //                En case de que la nave toque cada borde, vuelve al otro lado de la pantalla
                 if(posNaveX > SCENE_TAM_X){
@@ -151,27 +145,32 @@ public class Asteroids extends Application {
         scene.setOnKeyPressed((KeyEvent event) -> {
             switch(event.getCode()) {
                 case SPACE:
+//                  Posicion de la bola en X
+                    misil.setTranslateX(posNaveX);
+//                  Posicion de la bola en Y
+                    misil.setTranslateY(posNaveY);
+                    
                     misil = new Circle();
                     misil.setFill(Color.RED);
                     misil.setRadius(3);
                     root.getChildren().add(misil);
-//                    Posicion de la bola en X
-                    misil.setTranslateX(posNaveX);
-//                    Posicion de la bola en Y
-                    misil.setTranslateY(posNaveY);
                     
-//                    Si se pulsa espacio dispara
+                    misilAce = 5;
                     
+ //                 Calcula el angulo de la nave para disparar en su dirección                   
                     double anguloMisilRadianes = Math.toRadians(anguloNave);
-                    
                     misilVelocidadX = Math.cos(anguloMisilRadianes) * misilAce;
                     misilVelocidadY = Math.sin(anguloMisilRadianes) * misilAce;
                     
-//                    misil.setTranslateX();
-//                    misil.setTranslateY();
+                    //El misil aumenta la velocidad en X
+                posMisilX += misilVelocidadX;
+                //Posicion de la bola en Y
+                posMisilY += misilVelocidadY;
+                misil.setTranslateX(posMisilX);
+                misil.setTranslateY(posMisilY);  
                     break;
                 case RIGHT:
-                    //Si se pulsa derecha la nave gira a una velocidad de 5 grados//
+//                  Si se pulsa derecha la nave gira a una velocidad de 5 grados//
                     anguloVelNave = +5;
                     break;
                 case LEFT:
@@ -182,9 +181,7 @@ public class Asteroids extends Application {
 //                    Cuando pulsa arriba la nave acelera y modifica la velocidad dependiendo del ángulo
                     naveAceleracion = 0.5;
                     //Si se pulsa arriba la nave avanza segun donde este mirando// 
-                    double anguloNaveRadianes = Math.toRadians(anguloNave);
-                    naveVelocidadX += Math.cos(anguloNaveRadianes) * naveAceleracion;
-                    naveVelocidadY += Math.sin(anguloNaveRadianes) * naveAceleracion;
+                    moverAngulo();
                     
                     //Limite de velocidad para los 4 sentidos
                     if(naveVelocidadX > 4){
@@ -211,6 +208,19 @@ public class Asteroids extends Application {
                     anguloVelNave = 0;
             }
         });
+    }
+    
+    public void moverAngulo(){
+        double anguloNaveRadianes = Math.toRadians(anguloNave);
+        naveVelocidadX += Math.cos(anguloNaveRadianes) * naveAceleracion;
+        naveVelocidadY += Math.sin(anguloNaveRadianes) * naveAceleracion;
+    }
+    public void movimientoNave(){
+        //La nave se mueve en X constantemente
+        posNaveX += naveVelocidadX;
+        
+        //La nave se mueve en Y constantemente  
+        posNaveY += naveVelocidadY; 
     }
 }
 //nave.setRotate(angulonave);
