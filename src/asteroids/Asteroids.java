@@ -3,6 +3,7 @@ To change this template file, choose Tools | Templates and open the template in 
 
 package asteroids;
 
+import java.util.Random;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -42,7 +43,10 @@ public class Asteroids extends Application {
     double misilVelocidadY;
     
     double posMisilX; 
-    double posMisilY;
+    double posMisilY; 
+    
+    double asteroideX;
+    double asteroideY;
     
     Circle misil = new Circle();
     Pane root;
@@ -55,7 +59,7 @@ public class Asteroids extends Application {
         primaryStage.setTitle("Asteroids");
         primaryStage.setScene(scene);
         primaryStage.show();
-        
+                  
         //Objeto nave
         Polygon nave = new Polygon();
         nave.getPoints().addAll(new Double []{
@@ -80,20 +84,11 @@ public class Asteroids extends Application {
         });
         furo.setFill(Color.RED);
         root.getChildren().add(furo);
-//        Asteroide
-        Polygon asteroide = new Polygon();
-        asteroide.getPoints().addAll(new Double []{
-            0.0, 0.0,
-            40.0, 20.0,
-            60.0, 60.0,
-            10.0, 60.0
-        });
-        asteroide.setTranslateX(300);
-        asteroide.setTranslateY(300);
-        asteroide.setFill(Color.RED);
-        root.getChildren().add(asteroide);
+        
+//      Asteroide
+        asteroide();
 
-//        Objeto fuego amarillo
+//      Objeto fuego amarillo
         Polygon fuam = new Polygon();
         fuam.getPoints().addAll(new Double []{
             0.0, 0.0,
@@ -110,9 +105,11 @@ public class Asteroids extends Application {
                 nave.setTranslateX(posNaveX);
                 nave.setTranslateY(posNaveY);
 
+                movimientoMisil();
+                misil.setTranslateX(posMisilX);
+                misil.setTranslateY(posMisilY);                
                 
-                
-//                La nave gira constantemente
+//              La nave gira constantemente
                 anguloNave += anguloVelNave;
                 nave.setRotate(anguloNave);
                 
@@ -145,29 +142,29 @@ public class Asteroids extends Application {
         scene.setOnKeyPressed((KeyEvent event) -> {
             switch(event.getCode()) {
                 case SPACE:
-//                  Posicion de la bola en X
-                    misil.setTranslateX(posNaveX);
-//                  Posicion de la bola en Y
-                    misil.setTranslateY(posNaveY);
-                    
                     misil = new Circle();
                     misil.setFill(Color.RED);
                     misil.setRadius(3);
                     root.getChildren().add(misil);
                     
+    //              valora la bola para que la coloque donde este la nave
+                    posMisilX = posNaveX + 15;    
+                    posMisilY = posNaveY + 10;
+                    
+                    System.out.println("posMisilX :" + posMisilX);
+                    System.out.println("posMisilY :" + posMisilY);
+                    
+                    //Coloca el misil donde este la nave
+                    misil.setTranslateX(posMisilX);
+                    misil.setTranslateY(posMisilY);
+                    
+                    //Valora la aceleracion del misil
                     misilAce = 5;
                     
  //                 Calcula el angulo de la nave para disparar en su dirección                   
                     double anguloMisilRadianes = Math.toRadians(anguloNave);
                     misilVelocidadX = Math.cos(anguloMisilRadianes) * misilAce;
                     misilVelocidadY = Math.sin(anguloMisilRadianes) * misilAce;
-                    
-                    //El misil aumenta la velocidad en X
-                posMisilX += misilVelocidadX;
-                //Posicion de la bola en Y
-                posMisilY += misilVelocidadY;
-                misil.setTranslateX(posMisilX);
-                misil.setTranslateY(posMisilY);  
                     break;
                 case RIGHT:
 //                  Si se pulsa derecha la nave gira a una velocidad de 5 grados//
@@ -182,7 +179,6 @@ public class Asteroids extends Application {
                     naveAceleracion = 0.5;
                     //Si se pulsa arriba la nave avanza segun donde este mirando// 
                     moverAngulo();
-                    
                     //Limite de velocidad para los 4 sentidos
                     if(naveVelocidadX > 4){
                     naveVelocidadX = 4;
@@ -197,7 +193,6 @@ public class Asteroids extends Application {
                     naveVelocidadY = -4;
                     }
             }
-            
         });
 //        Soltar boton
         scene.setOnKeyReleased((KeyEvent event) -> {
@@ -209,7 +204,6 @@ public class Asteroids extends Application {
             }
         });
     }
-    
     public void moverAngulo(){
         double anguloNaveRadianes = Math.toRadians(anguloNave);
         naveVelocidadX += Math.cos(anguloNaveRadianes) * naveAceleracion;
@@ -218,19 +212,31 @@ public class Asteroids extends Application {
     public void movimientoNave(){
         //La nave se mueve en X constantemente
         posNaveX += naveVelocidadX;
-        
         //La nave se mueve en Y constantemente  
         posNaveY += naveVelocidadY; 
     }
+    public void movimientoMisil(){
+        //El misil aumenta la velocidad en X
+        posMisilX += misilVelocidadX;
+        //Posicion de la bola en Y
+        posMisilY += misilVelocidadY;
+    }
+    public void asteroide(){
+        for (int i= 0; i <3; i++){    	
+            Polygon asteroide = new Polygon();
+            asteroide.getPoints().addAll(new Double []{
+                0.0, 0.0,
+                40.0, 20.0,
+                60.0, 60.0,
+                10.0, 60.0
+            });
+            asteroide.setFill(Color.RED);
+            root.getChildren().add(asteroide);
+            Random randomAsteroide = new Random();
+            asteroideX = randomAsteroide.nextInt(SCENE_TAM_X);
+            asteroideY = randomAsteroide.nextInt(SCENE_TAM_Y);
+            asteroide.setTranslateX(asteroideX);
+            asteroide.setTranslateY(asteroideY);
+        }
+    }
 }
-//nave.setRotate(angulonave);
-//nave.setCenterX(naveCenterX);
-//nave.setCenterY(naveCenterY);
-
-//system.out.println(naveAngulo)
-
-
-//AREA 51
-//naveVelocidadX += naveAceleracionX
-
-//AREA 51
