@@ -3,7 +3,7 @@ To change this template file, choose Tools | Templates and open the template in 
 
 package asteroids;
 
-import java.util.Random;
+
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -85,9 +85,6 @@ public class Asteroids extends Application {
         furo.setFill(Color.RED);
         root.getChildren().add(furo);
         
-//      Asteroide
-        asteroide();
-
 //      Objeto fuego amarillo
         Polygon fuam = new Polygon();
         fuam.getPoints().addAll(new Double []{
@@ -221,22 +218,8 @@ public class Asteroids extends Application {
         //Posicion de la bola en Y
         posMisilY += misilVelocidadY;
     }
-    public void asteroide(){
-        for (int i= 0; i <3; i++){    	
-            Polygon asteroide = new Polygon();
-            asteroide.getPoints().addAll(new Double []{
-                0.0, 0.0,
-                40.0, 20.0,
-                60.0, 60.0,
-                10.0, 60.0
-            });
-            asteroide.setFill(Color.RED);
-            root.getChildren().add(asteroide);
-            Random randomAsteroide = new Random();
-            asteroideX = randomAsteroide.nextInt(SCENE_TAM_X);
-            asteroideY = randomAsteroide.nextInt(SCENE_TAM_Y);
-            asteroide.setTranslateX(asteroideX);
-            asteroide.setTranslateY(asteroideY);
-        }
-    }
+//    public class asteroide(){
+//        asteroide.s
+//    }
+            
 }
