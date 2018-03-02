@@ -51,6 +51,8 @@ public class Asteroids extends Application {
     double asteroideX;
     double asteroideY;
     
+    double asteroideVelX;
+    double asteroideVelY;
     Circle misil = new Circle();
     Pane root;
     
@@ -63,20 +65,11 @@ public class Asteroids extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
         
-        Button btnEstilo1 = new Button();
-        btnEstilo1.setText("Estilo 1");
-        // Asignar un identificador para la hoja de estilos
-        btnEstilo1.setId("boton1"); 
-        btnEstilo1.setOnAction(new EventHandler() {            
-            public void handle(ActionEvent event) {
-                // Limpiar los estilos que tuviera anteriormente
-                scene.getStylesheets().clear();
-                // Aplicar la hoja de estilos
-                scene.getStylesheets().add(
-                    getClass().getResource("resources/css/estilo1.css").toExternalForm());                 
-            }
-        });
-        
+        //Creacion de los objetos asteroides
+        asteroide a = new asteroide();
+        for (int i= 0; i <3; i++){ 
+            a.asteroideObj(root);
+        }
         //Objeto nave
         Polygon nave = new Polygon();
         nave.getPoints().addAll(new Double []{
@@ -123,6 +116,9 @@ public class Asteroids extends Application {
                 misil.setTranslateX(posMisilX);
                 misil.setTranslateY(posMisilY);                
                 
+                //Movimiento asteroides
+                a.setTranslateX(asteroideX);
+                a.setTranslateY(asteroideY);
 //              La nave gira constantemente
                 anguloNave += anguloVelNave;
                 nave.setRotate(anguloNave);
