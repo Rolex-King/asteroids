@@ -4,9 +4,12 @@ To change this template file, choose Tools | Templates and open the template in 
 package asteroids;
 
 
+
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -59,7 +62,21 @@ public class Asteroids extends Application {
         primaryStage.setTitle("Asteroids");
         primaryStage.setScene(scene);
         primaryStage.show();
-                  
+        
+        Button btnEstilo1 = new Button();
+        btnEstilo1.setText("Estilo 1");
+        // Asignar un identificador para la hoja de estilos
+        btnEstilo1.setId("boton1"); 
+        btnEstilo1.setOnAction(new EventHandler() {            
+            public void handle(ActionEvent event) {
+                // Limpiar los estilos que tuviera anteriormente
+                scene.getStylesheets().clear();
+                // Aplicar la hoja de estilos
+                scene.getStylesheets().add(
+                    getClass().getResource("resources/css/estilo1.css").toExternalForm());                 
+            }
+        });
+        
         //Objeto nave
         Polygon nave = new Polygon();
         nave.getPoints().addAll(new Double []{

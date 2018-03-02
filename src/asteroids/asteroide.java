@@ -6,6 +6,7 @@
 package asteroids;
 
 import java.util.Random;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 
@@ -26,6 +27,7 @@ public class asteroide {
     double asteroideY;
     
     void asteroideObj(){
+        root = new Pane();
         for (int i= 0; i <3; i++){    	
             Polygon asteroide = new Polygon();
             asteroide.getPoints().addAll(new Double []{
