@@ -29,9 +29,6 @@ public class Asteroids extends Application {
     double anguloNave = 360;
     int anguloVelNave;
     
-//    int centroNaveX = 30/2; 
-//    int centroNaveY = 5;
-    
     double posNaveX = SCENE_TAM_X/2;
     double posNaveY = SCENE_TAM_Y/2;
     
@@ -53,6 +50,7 @@ public class Asteroids extends Application {
     
     double asteroideVelX;
     double asteroideVelY;
+               
     Circle misil = new Circle();
     Pane root;
     
@@ -116,9 +114,10 @@ public class Asteroids extends Application {
                 misil.setTranslateX(posMisilX);
                 misil.setTranslateY(posMisilY);                
                 
-                //Movimiento asteroides
-                a.setTranslateX(asteroideX);
-                a.setTranslateY(asteroideY);
+//              Movimiento asteroides
+                a.movimientoAsteroide(root);
+                System.out.println("posAsteroideX: " + asteroideX);
+                System.out.println("posMisilY :" + asteroideY);
 //              La nave gira constantemente
                 anguloNave += anguloVelNave;
                 nave.setRotate(anguloNave);
@@ -160,9 +159,6 @@ public class Asteroids extends Application {
     //              valora la bola para que la coloque donde este la nave
                     posMisilX = posNaveX + 15;    
                     posMisilY = posNaveY + 10;
-                    
-                    System.out.println("posMisilX :" + posMisilX);
-                    System.out.println("posMisilY :" + posMisilY);
                     
                     //Coloca el misil donde este la nave
                     misil.setTranslateX(posMisilX);
@@ -230,9 +226,5 @@ public class Asteroids extends Application {
         posMisilX += misilVelocidadX;
         //Posicion de la bola en Y
         posMisilY += misilVelocidadY;
-    }
-//    public class asteroide(){
-//        asteroide.s
-//    }
-            
+    }    
 }
