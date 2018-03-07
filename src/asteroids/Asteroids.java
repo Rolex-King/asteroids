@@ -48,9 +48,9 @@ public class Asteroids extends Application {
     double asteroideX;
     double asteroideY;
     
-    double asteroideVelX;
-    double asteroideVelY;
-               
+    double asteroideVelX = 3;
+    double asteroideVelY = 3;
+    
     Circle misil = new Circle();
     Pane root;
     
@@ -63,11 +63,12 @@ public class Asteroids extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
         
-        //Creacion de los objetos asteroides
-        asteroide a = new asteroide();
+//Creacion de los objetos asteroides
+        Asteroide a = new Asteroide();
         for (int i= 0; i <3; i++){ 
             a.asteroideObj(root);
-        }
+        }        
+        
         //Objeto nave
         Polygon nave = new Polygon();
         nave.getPoints().addAll(new Double []{
@@ -115,14 +116,17 @@ public class Asteroids extends Application {
                 misil.setTranslateY(posMisilY);                
                 
 //              Movimiento asteroides
-                a.movimientoAsteroide(root);
+                asteroideX += asteroideVelX;
+                asteroideY += asteroideVelY;
+
                 System.out.println("posAsteroideX: " + asteroideX);
                 System.out.println("posMisilY :" + asteroideY);
+                
 //              La nave gira constantemente
                 anguloNave += anguloVelNave;
                 nave.setRotate(anguloNave);
                 
-//                En case de que la nave toque cada borde, vuelve al otro lado de la pantalla
+//              En case de que la nave toque cada borde, vuelve al otro lado de la pantalla
                 if(posNaveX > SCENE_TAM_X){
                     posNaveX = 0;
                 }
